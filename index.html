@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b0e16">
+  <meta name="description" content="Локальная AI Video Studio — планирование производства видео">
+  <title>AI Video Studio</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar" aria-label="Главная навигация">
+    <div class="brand">
+      <div class="brand-mark">▶</div>
+      <div><strong>AI Video Studio</strong><small>LEADER MODE · v0.2</small></div>
+      <button class="icon-btn sidebar-close" id="closeMenu" aria-label="Закрыть меню">×</button>
+    </div>
+    <nav class="nav-list">
+      <button class="nav-item active" data-view="home"><span>⌂</span>Главная</button>
+      <button class="nav-item" data-view="projects"><span>▣</span>Мои проекты</button>
+      <button class="nav-item" data-view="workflow"><span>⌘</span>Производство</button>
+      <button class="nav-item" data-view="team"><span>◈</span>Команда ИИ</button>
+      <button class="nav-item" data-view="queue"><span>☷</span>Очередь задач</button>
+      <button class="nav-item" data-view="style"><span>✧</span>Style Bible</button>
+      <button class="nav-item" data-view="settings"><span>⚙</span>Настройки</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="status-dot"></span> Локальное хранение
+      <small>Внешние ИИ пока не подключены</small>
+    </div>
+  </aside>
+  <div class="backdrop" id="backdrop" hidden></div>
+
+  <main class="main">
+    <header class="topbar">
+      <button class="icon-btn menu-open" id="menuButton" aria-label="Открыть меню" aria-expanded="false">☰</button>
+      <div class="breadcrumb" id="breadcrumb">Главная</div>
+      <div class="top-status"><span class="status-dot"></span><span>На этом устройстве</span></div>
+    </header>
+
+    <section class="view active" id="home">
+      <div class="hero">
+        <div class="eyebrow">ТВОЯ ВИДЕОСТУДИЯ</div>
+        <h1>От идеи до <span>готового видео</span></h1>
+        <p>Опиши задумку. Студия подготовит проект, разобьёт работу на этапы и поможет организовать команду ИИ.</p>
+      </div>
+      <div class="panel composer">
+        <label for="idea">Что будем создавать?</label>
+        <textarea id="idea" rows="4" placeholder="Например: документальное видео на 15 минут о Дороге жизни, с историческими иллюстрациями и атмосферной озвучкой..."></textarea>
+        <div class="composer-bottom">
+          <div class="field-hint">YouTube · 16:9 · 1920×1080 · длинное видео</div>
+          <button class="primary-btn" id="createProject">Создать проект <span>↗</span></button>
+        </div>
+      </div>
+      <div class="section-heading"><h2>Рабочее пространство</h2><span class="muted">Быстрый доступ</span></div>
+      <div class="quick-grid">
+        <button class="quick-card" data-view="projects"><span class="quick-icon">▣</span><b>Мои проекты</b><small>Идеи и материалы</small></button>
+        <button class="quick-card" data-view="workflow"><span class="quick-icon">⌘</span><b>Производство</b><small>Этапы создания ролика</small></button>
+        <button class="quick-card" data-view="team"><span class="quick-icon">◈</span><b>Команда ИИ</b><small>Исполнители и статусы</small></button>
+        <button class="quick-card" data-view="queue"><span class="quick-icon">☷</span><b>Очередь задач</b><small>План и ожидание лимитов</small></button>
+      </div>
+      <div class="notice"><b>✦ Единый визуальный стиль</b><p>Для проекта можно сохранить Style Bible: палитру, правила рисовки, персонажей и эталонные изображения. Это поможет проверять согласованность сцен.</p></div>
+      <div class="section-heading"><h2>Последние проекты</h2><button class="text-btn" data-view="projects">Все проекты →</button></div>
+      <div id="recentProjects" class="stack-list"></div>
+    </section>
+
+    <section class="view" id="projects">
+      <div class="page-heading"><div><div class="eyebrow">БИБЛИОТЕКА</div><h1>Мои проекты</h1><p>Все видеопроекты, сохранённые на этом устройстве.</p></div><button class="primary-btn" id="newProject">＋ Новый проект</button></div>
+      <div id="projectList" class="stack-list"></div>
+    </section>
+
+    <section class="view" id="projectDetail">
+      <button class="text-btn back-link" id="backProjects">← К проектам</button>
+      <div id="projectDetailContent"></div>
+    </section>
+
+    <section class="view" id="workflow">
+      <div class="page-heading"><div><div class="eyebrow">ПРОИЗВОДСТВО</div><h1>Этапы создания</h1><p>Базовый маршрут от идеи до итогового файла.</p></div></div>
+      <div class="timeline" id="workflowList"></div>
+      <div class="notice"><b>Важно</b><p>Сейчас это планировщик. Генерация сценария, изображений, озвучки и MP4 начнётся после подключения соответствующих сервисов.</p></div>
+    </section>
+
+    <section class="view" id="team">
+      <div class="page-heading"><div><div class="eyebrow">ИСПОЛНИТЕЛИ</div><h1>Команда ИИ</h1><p>Координатор назначает исполнителей и проверяет результаты.</p></div></div>
+      <div class="leader-card"><div class="avatar">✦</div><div><b>Главный координатор · ChatGPT</b><p>Планирует работу, распределяет задачи, проверяет результаты и решает, что делать дальше.</p><span class="tag">РОЛЬ КООРДИНАТОРА</span></div></div>
+      <div id="teamList" class="team-grid"></div>
+      <div class="notice"><b>Подключения не активированы</b><p>Ни один внешний API не подключён. Не вставляй секретные ключи в публичный GitHub Pages или клиентский JavaScript.</p></div>
+    </section>
+
+    <section class="view" id="queue">
+      <div class="page-heading"><div><div class="eyebrow">ОРКЕСТРАТОР</div><h1>Очередь задач</h1><p>Задачи сохраняются, даже если закрыть страницу.</p></div><span class="pill">РЕЖИМ: ПОСЛЕДОВАТЕЛЬНЫЙ</span></div>
+      <div class="stats-grid">
+        <div class="stat-card"><small>Всего задач</small><b id="statTotal">0</b></div>
+        <div class="stat-card"><small>Ожидают</small><b id="statWaiting">0</b></div>
+        <div class="stat-card"><small>Выполнено</small><b id="statDone">0</b></div>
+      </div>
+      <div class="notice compact-notice"><b>Ожидание бесплатных лимитов</b><p>Когда API будут подключены, очередь сможет сохранять задачу и ждать восстановления лимита. Автоматическое ожидание пока не выполняется.</p></div>
+      <div id="queueList" class="stack-list"></div>
+    </section>
+
+    <section class="view" id="style">
+      <div class="page-heading"><div><div class="eyebrow">ВИЗУАЛЬНАЯ СИСТЕМА</div><h1>Style Bible</h1><p>Общие правила внешнего вида сцен и персонажей.</p></div></div>
+      <div class="panel form-panel">
+        <label for="styleName">Название стиля</label><input id="styleName" placeholder="Например: рисованная документальная анимация">
+        <label for="styleRules">Правила рисовки и визуальной непрерывности</label><textarea id="styleRules" rows="5" placeholder="Палитра, линии, освещение, фон, пропорции персонажей, что нельзя менять между сценами..."></textarea>
+        <label for="characterRules">Персонажи и их постоянные особенности</label><textarea id="characterRules" rows="4" placeholder="Одежда, причёска, цвета, отличительные детали..."></textarea>
+        <button class="primary-btn" id="saveStyle">Сохранить Style Bible</button>
+      </div>
+      <div class="notice"><b>Совет по непрерывности</b><p>Сохраняй эталонные изображения и повторяй неизменные описания персонажей в каждой сцене. Одного текстового описания недостаточно для гарантии одинакового результата.</p></div>
+    </section>
+
+    <section class="view" id="settings">
+      <div class="page-heading"><div><div class="eyebrow">КОНФИГУРАЦИЯ</div><h1>Настройки</h1><p>Параметры студии и резервные копии.</p></div></div>
+      <div class="panel settings-list">
+        <div class="setting-row"><div><b>Формат проекта</b><small>YouTube · 16:9 · 1920×1080</small></div><span class="tag">ЗАДАНО</span></div>
+        <div class="setting-row"><div><b>Параллельность</b><small>Не более двух ИИ; по умолчанию один</small></div><span class="tag">1–2</span></div>
+        <div class="setting-row"><div><b>Хранение</b><small>Локально в браузере этого устройства</small></div><span class="tag">LOCAL</span></div>
+        <div class="setting-row"><div><b>Экспорт резервной копии</b><small>Скачать проекты, задачи и Style Bible</small></div><button class="secondary-btn" id="exportData">Экспорт JSON</button></div>
+        <div class="setting-row"><div><b>Импорт резервной копии</b><small>Восстановить ранее сохранённый JSON</small></div><button class="secondary-btn" id="importButton">Выбрать файл</button><input type="file" id="importFile" accept="application/json,.json" hidden></div>
+        <div class="setting-row danger-row"><div><b>Удалить все локальные данные</b><small>Сначала рекомендуется сделать экспорт</small></div><button class="danger-btn" id="clearData">Удалить</button></div>
+      </div>
+    </section>
+    <footer>AI Video Studio v0.2 · Локальный прототип · Внешние ИИ не подключены</footer>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="app.js" defer></script>
+</body>
+</html>

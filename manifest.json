@@ -1,0 +1,12 @@
+{
+  "name": "AI Video Studio",
+  "short_name": "AI Studio",
+  "description": "Локальная студия планирования производства видео",
+  "lang": "ru",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b0e16",
+  "theme_color": "#0b0e16",
+  "orientation": "any"
+}
